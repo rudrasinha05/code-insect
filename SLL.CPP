@@ -6,17 +6,21 @@ struct node *next;
 #include<stdio.h>
 #include<conio.h>
 #include<stdlib.h>
+#include<math.h>
 void print_all_ele(struct node *);
-//struct node *last_node_addr(struct node *);
-//struct node *find_x(struct node *);
-//struct node *find_x1(struct node *);
-//struct node *second_last_node_addr(struct node *);
-//struct node *third_last_node_addr(struct node *);
+struct node *last_node_addr(struct node *);
+struct node *find_x(struct node *);
+struct node *find_x1(struct node *);
+struct node *second_last_node_addr(struct node *);
+struct node *third_last_node_addr(struct node *);
 void address_of_nodes(struct node *);
-//struct node *third_last_node_addr1(struct node *);
-//struct node *second_last_node_addr1(struct node *);
-//void insert_x(struct node *);
+struct node *third_last_node_addr1(struct node *);
+struct node *second_last_node_addr1(struct node *);
+void insert_x(struct node *);
 void delete_x(struct node *);
+void move_last_to_front(struct node *);
+void middle_node_addr(struct node *);
+void middle_node_addr1(struct node *);
 struct node *main()
 {
 clrscr();
@@ -61,14 +65,19 @@ printf("\n           OR\nAddress of second last node is %u.\n\n",secondLAST1);
 
 thirdLAST=third_last_node_addr(s);
 printf("Address of third last node is %u.",thirdLAST);
-
+d
 thirdLAST1=third_last_node_addr1(s);
 printf("\n          OR\nAddress of third last node is %u.\n\n",thirdLAST1);
 
 insert_x(s);
 	     */
-delete_x(s);
+//delete_x(s);
 
+//move_last_to_front(s);
+
+/*middle_node_addr(s);
+printf("          OR\n");
+middle_node_addr1(s);    */
 getch();
 return s;
 }
@@ -85,7 +94,7 @@ while((*s).next!=NULL)
  printf("%d",(*s).data);
   printf(".\n\n");
 }
-	     /*
+
 //finding address of last node in single linked list
 struct node *last_node_addr(struct node *s)
 {
@@ -214,7 +223,7 @@ s=(*s).next;
 return s;
 }
 }
-	       */
+
 
 //printing address of all nodes in single linked list
 void address_of_nodes(struct node *s)
@@ -235,7 +244,7 @@ printf(".\n\n");
 }
 
 
-	       /*
+
 //insert a node with data-x before node with data-y
 void insert_x(struct node *s)
 {
@@ -278,7 +287,7 @@ void insert_x(struct node *s)
        printf("No %d in linked list\n",y);
      }
  }
-}                */
+}
 
 
 //delete a node which contain data-x in SLL
@@ -294,6 +303,15 @@ void delete_x(struct node *s)
   q=s;
  printf("enter a number which you want to delete : ");
  scanf("%d",&x);
+ if((*s).data==x)
+ {
+ p=s;
+ s=(*s).next;
+ free(s);
+ p=NULL;
+  print_all_ele(s);
+
+ }
   while((*s).data!=x && (*s).next!=NULL)
   {
     p=s;
@@ -308,6 +326,85 @@ void delete_x(struct node *s)
  }
  else
  {
- printf("No x, So no deletion");
+ printf("No x, So no deletion\n");
  }
+ middle_node_addr(q);
+}
+
+//to move last node of single linked list to front
+void move_last_to_front(struct node *s)
+{
+struct node *p;
+struct node *q;
+q=s;
+if(s==NULL)
+{
+printf("No linked list exist\n");
+}
+if(s->next==NULL)
+{
+printf("only one node in the linked list\n");
+}
+while((*s).next!=NULL)
+{
+ p=s;
+ s=(*s).next;
+}
+(*p).next=NULL;
+(*s).next=q;
+ print_all_ele(s);
+ address_of_nodes(s);
+}
+
+//find the middle node address of given single linked list
+void middle_node_addr(struct node *s)
+{
+int count=0;
+struct node *p;
+p=s;
+if(s==NULL)
+{
+printf("No linked list exist\n");
+}
+if(s->next==NULL || s->next->next==NULL)
+{
+printf("there is onle one or two nodes in Linked List , so no middle\n");
+}
+while((*s).next!=NULL)
+{
+count++;
+s=(*s).next;
+}
+float val=(float)count/2;
+count=ceil(val);
+printf("count=%d",count);
+while(count!=1)
+{
+ p=(*p).next;
+ count--;
+}
+if(count%2!=0)
+ {
+  p=p->next;
+  printf("middle node address is %u.\n",p);
+  printf("middle node is %d\n.",p->data);
+ }
+else
+ {
+  printf("middle node address is %u and %u.\n",p,p->next);
+  printf("middle node is %d OR %d.\n",p->data,p->next->data);
+ }
+}
+
+//            OR
+void middle_node_addr1(struct node *s)
+{
+struct node *p;
+p=s;
+while((*s).next!=NULL)
+{
+p=(*p).next;
+s=(*(*s).next).next;
+}
+printf("middle node is %u.\n",p);
 }
